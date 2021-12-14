@@ -20,34 +20,50 @@ app.use(express.json());
 
 app.post("/createTask", (req, res) => {
   const task = new Task(req.body);
-	task.save().then(result =>{
-		Task.find().then((result) => {
-			res.send({
-				data: result,
+	try{
+		task.save().then(result =>{
+			Task.find().then((result) => {
+				res.send({
+					data: result,
+				});
 			});
 		});
-	})
+	}
+	catch(err){
+			console.log(err);
+	}
 });
 
 app.patch("/updateTask", (req, res) => {
+	try{
 		Task.updateOne(
 			{_id: req.body._id}, req.body).then((result) => {
-				Task.find().then((result) => {
-					res.send({
-					  data: result,
+					Task.find().then((result) => {
+						res.send({
+							data: result,
+						});
 					});
-				});
-		});
+			}
+		);
+	}
+	catch(err){
+		console.log(err);
+	}	
 });
 
 app.delete("/deleteTask", (req, res) => {
-	Task.deleteOne({_id: req.query.id}).then(result =>{
-		Task.find().then((result) => {
-			res.send({
-				data: result,
+	try{
+		Task.deleteOne({_id: req.query.id}).then(result =>{
+			Task.find().then((result) => {
+				res.send({
+					data: result,
+				});
 			});
-		});
-	})
+		})
+	}
+	catch(err){
+		console.log(err);
+	}	
 });
 
 
