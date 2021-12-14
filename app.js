@@ -20,7 +20,9 @@ app.use(express.json());
 
 app.post("/createTask", (req, res) => {
   const task = new Task(req.body);
-	if (req.body.hasOwnProperty('text')){
+	if (req.body.hasOwnProperty('text')&&
+			req.body.hasOwnProperty('isCheck')
+	){
 		task.save().then(result =>{
 			Task.find().then((result) => {
 				res.send({
@@ -35,7 +37,10 @@ app.post("/createTask", (req, res) => {
 });
 
 app.patch("/updateTask", (req, res) => {
-	if (req.body.hasOwnProperty('text')){
+	if (req.body.hasOwnProperty('text')&&
+			req.body.hasOwnProperty('isCheck')&&
+			req.body.hasOwnProperty('_id')
+	){
 		Task.updateOne(
 			{_id: req.body._id}, req.body).then((result) => {
 					Task.find().then((result) => {
