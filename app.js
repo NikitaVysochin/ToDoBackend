@@ -40,7 +40,8 @@ app.patch("/updateTask", (req, res) => {
 	if (req.body.hasOwnProperty('text')&&
 			req.body.hasOwnProperty('isCheck')&&
 			req.body.hasOwnProperty('_id')
-	){
+	)
+	{
 		Task.updateOne(
 			{_id: req.body._id}, req.body).then((result) => {
 					Task.find().then((result) => {
