@@ -22,23 +22,22 @@ app.post("/createTask", (req, res) => {
   const task = new Task(req.body);
 	if (req.body.hasOwnProperty('text')&&
 			req.body.hasOwnProperty('isCheck')
-	){
-		task.save().then(result =>{
+	) {
+		task.save().then(result => {
 			Task.find().then((result) => {
 				res.send({
 					data: result,
 				});
 			});
 		});
-	}
-	else{
+	} else {
 			res.status(402).send('error in post');
 	}
 });
 
 app.patch("/updateTask", (req, res) => {
-	if (req.body.hasOwnProperty('text')&&
-			req.body.hasOwnProperty('isCheck')&&
+	if (req.body.hasOwnProperty('text') &&
+			req.body.hasOwnProperty('isCheck') &&
 			req.body.hasOwnProperty('_id')
 	) {
 		Task.updateOne(
@@ -50,23 +49,21 @@ app.patch("/updateTask", (req, res) => {
 					});
 			}
 		);
-	}
-	else{
+	} else {
 		res.status(402).send('error in patch');
 }
 });
 
 app.delete("/deleteTask", (req, res) => {
 	if (req.query.id){
-		Task.deleteOne({_id: req.query.id}).then(result =>{
+		Task.deleteOne({_id: req.query.id}).then(result => {
 			Task.find().then((result) => {
 				res.send({
 					data: result,
 				});
 			});
 		});
-	}
-	else {
+	} else {
 		res.status(402).send('error in delete');
 	}
 });
