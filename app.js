@@ -20,7 +20,7 @@ app.use(express.json());
 
 app.post("/createTask", (req, res) => {
   const task = new Task(req.body);
-	try{
+	if (req.body.hasOwnProperty('text')){
 		task.save().then(result =>{
 			Task.find().then((result) => {
 				res.send({
@@ -29,13 +29,13 @@ app.post("/createTask", (req, res) => {
 			});
 		});
 	}
-	catch(err){
-			console.log(err);
+	else{
+			res.status(402).send('error in post');
 	}
 });
 
 app.patch("/updateTask", (req, res) => {
-	try{
+	if (req.body.hasOwnProperty('text')){
 		Task.updateOne(
 			{_id: req.body._id}, req.body).then((result) => {
 					Task.find().then((result) => {
@@ -46,33 +46,33 @@ app.patch("/updateTask", (req, res) => {
 			}
 		);
 	}
-	catch(err){
-		console.log(err);
-	}	
+	else{
+		res.status(402).send('error in patch');
+}
 });
 
 app.delete("/deleteTask", (req, res) => {
-	try{
+	if (req.query.id){
 		Task.deleteOne({_id: req.query.id}).then(result =>{
 			Task.find().then((result) => {
 				res.send({
 					data: result,
 				});
 			});
-		})
+		});
 	}
-	catch(err){
-		console.log(err);
-	}	
+	else {
+		res.status(402).send('error in delete');
+	}
 });
 
 
 app.get("/getAllTasks", (req, res) => {
-  Task.find().then((result) => {
-    res.send({
-      data: result,
-    });
-  });
+  	Task.find().then((result) => {
+    	res.send({
+      	data: result,
+    	});
+  	});
 });
 
 app.listen(8000, () => {
