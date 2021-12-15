@@ -7,12 +7,8 @@ const app = express();
 const apiRoutes = require('./src/modules/routes/routers'); 
 
 app.use(cors());
-const uri =
-  "mongodb+srv://Nikita:restart987@cluster0.1fkli.mongodb.net/ToDoList?retryWrites=true&w=majority";
+const uri = "mongodb+srv://Nikita:restart987@cluster0.1fkli.mongodb.net/ToDoList?retryWrites=true&w=majority";
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-
-
-
 
 app.use(express.json());
 app.use('/', apiRoutes);
@@ -20,4 +16,3 @@ app.use('/', apiRoutes);
 app.listen(8000, () => {
   console.log("...port 8000");
 });
-//kiy
